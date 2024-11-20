@@ -1,27 +1,46 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
+const passport = require("passport");
+const {render} = require("ejs");
 
 exports.getLogin = (req, res) => {
-    res.render("login");
+    // console.log(req.user);
+
+    res.render("login", {
+        title: "login",
+        user: req.user,
+        error: "",
+    });
 };
 
-exports.Login = async (req, res) => {
-    const {email, password} = req.body;
-    try {
-        const loginData = await User.findOne({email});
-        const checkHash = await bcrypt.compare(password, loginData.password);
-        if (checkHash) {
-            res.send("login sacksful");
-        } else {
-            res.send("Email and pass wrong");
+exports.Login = async (req, res, next) => {
+    passport.authenticate("local", (err, user, info) => {
+        console.log({err, user, info});
+        if (err) {
+            return next(err);
         }
-    } catch (error) {
-        res.send(error);
-    }
+        if (!user) {
+            return res.render("login", {
+                title: "login",
+                user: req.user,
+                error: info.message,
+            });
+        }
+        req.logIn(user, (err) => {
+            if (err) {
+                return next(err);
+            }
+            return res.redirect("/");
+        });
+    })(req, res, next);
 };
 
 exports.getRegistration = (req, res) => {
-    res.render("register");
+    res.render("register", {
+        title: "register",
+        user: req.user,
+        error: "",
+    });
 };
 
 exports.Registration = async (req, res) => {
@@ -37,7 +56,7 @@ exports.Registration = async (req, res) => {
             });
         }
 
-        const passHash = await bcrypt.hash(password , 10)
+        const passHash = await bcrypt.hash(password, 10);
         // Create a new user
         const newUser = new User({
             username,
@@ -55,4 +74,15 @@ exports.Registration = async (req, res) => {
             error: error.message,
         });
     }
+};
+
+// logOut
+
+exports.logout = async (req, res) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect("/auth/login")
+    });
 };

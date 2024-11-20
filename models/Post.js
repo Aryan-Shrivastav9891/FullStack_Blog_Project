@@ -14,27 +14,28 @@ const PostSchema = new Schema(
             require: true,
         },
         author: {
-            type: Schema.types.ObjectId,
-            require: true,
+            type: Schema.Types.ObjectId,
+            require: false,
+            ref:"User"
         },
-        images: [
-            {
-                url: {
-                    type: String,
-                    required: true,
-                },
-                public_id: {
-                    type: String,
-                    require: true,
-                },
-            },
-        ],
-        comments: [
-            {
-                type: Schema.types.ObjectId,
-                ref: "Comment",
-            },
-        ],
+        // images: [
+        //     {
+        //         url: {
+        //             type: String,
+        //             required: true,
+        //         },
+        //         public_id: {
+        //             type: String,
+        //             require: true,
+        //         },
+        //     },
+        // ],
+        // comments: [
+        //     {
+        //         type: Schema.types.ObjectId,
+        //         ref: "Comment",
+        //     },
+        // ],
     },
     {
         timestamps: true,
