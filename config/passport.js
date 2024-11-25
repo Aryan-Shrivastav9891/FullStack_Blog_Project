@@ -1,6 +1,4 @@
-const {models, model} = require("mongoose");
 const User = require("../models/User");
-// const User = require("../models/User");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 module.exports = function (passport) {
