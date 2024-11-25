@@ -38,6 +38,12 @@ app.use("/auth", userRoute);
 
 app.use('/posts' , postRoute)
 //mongoDB COnnection
+
+// home  
+app.get("/" , (req,res)=>{
+    res.render("home")
+})
+
 mongoose
 .connect(process.env.mongoDB_URL)
 .then(() => {
