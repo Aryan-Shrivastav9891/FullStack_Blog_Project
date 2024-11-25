@@ -36,7 +36,17 @@ app.use(passport.session());
 //! Route   Login
 app.use("/auth", userRoute);
 
+//Home route 
+app.get("/" , (req,res)=>{
+    res.render("home" , {
+        user :req.user,
+        error:'',
+        title:"Home"
+    })
+})
+
 app.use('/posts' , postRoute)
+
 //mongoDB COnnection
 
 // home  

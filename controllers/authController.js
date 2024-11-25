@@ -16,6 +16,8 @@ exports.getLogin = (req, res) => {
 exports.Login = async (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {
         console.log({err, user, info});
+        console.log("this login route")
+        
         if (err) {
             return next(err);
         }
