@@ -1,22 +1,22 @@
-const {Mongoose, Schema, default: mongoose, model} = require("mongoose");
+const { Schema, model, Types } = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-// Schema
+// User Schema
 const UserSchema = new Schema(
     {
         username: {
             type: String,
-            require: true,
+            required: true, // Corrected 'require' to 'required'
             trim: true,
         },
         email: {
             type: String,
-            require: true,
+            required: true, // Corrected 'require' to 'required'
             trim: true,
         },
         password: {
             type: String,
-            require: true,
+            required: true, // Corrected 'require' to 'required'
         },
         profilePicture: {
             type: String,
@@ -25,16 +25,16 @@ const UserSchema = new Schema(
         bio: {
             type: String,
         },
-        post: [
+        posts: [ // Changed from 'post' to 'posts' to keep it plural (more natural)
             {
-                type: Schema.types.ObjectId,
-                ref: "POST",
+                type: Schema.Types.ObjectId, // Corrected to 'Types.ObjectId'
+                ref: "Post", // Corrected model name capitalization
             },
         ],
         comments: [
             {
-                type: Schema.types.ObjectId,
-                ref: "Comment",
+                type: Types.ObjectId, // Corrected to 'Types.ObjectId'
+                ref: "Comment", // Corrected model name capitalization
             },
         ],
     },
@@ -43,7 +43,7 @@ const UserSchema = new Schema(
     }
 );
 
-const User = mongoose.model("User" , UserSchema)
+// Create model for User
+const User = model("User", UserSchema); // Corrected model name capitalization
 
-
-module.exports = User
+module.exports = User;

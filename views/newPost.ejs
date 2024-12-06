@@ -1,0 +1,15 @@
+<form action="/posts/add" method="POST" enctype="multipart/form-data">
+  <div>
+    <label for="title">Title</label>
+    <input value="this is title" type="text" name="title" id="title" />
+  </div>
+  <div>
+    <label for="content">Content</label>
+    <textarea value="this is content" name="content" id="content" cols="30" rows="10"></textarea>
+  </div>
+  <div>
+    <label for="image">Image</label>
+    <input multiple type="file" name="image" id="image" />
+  </div>
+  <button type="submit">Submit</button>
+</form>
