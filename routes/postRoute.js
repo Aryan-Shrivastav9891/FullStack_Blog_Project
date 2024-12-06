@@ -1,12 +1,12 @@
 const express = require("express");
-const upload = require("../config/multer");
+const handleFileUpload = require("../config/multer");
 
 const { getPostForm, createPost } = require("../controllers/postController");
 const postRoute = express.Router();
 
 postRoute.get("/add", getPostForm);
 
-postRoute.post("/add", upload.single("image"), createPost);
+postRoute.post("/add", handleFileUpload , createPost);
 
 module.exports = postRoute;
     

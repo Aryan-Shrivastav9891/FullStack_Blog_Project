@@ -21,13 +21,11 @@ module.exports = function (passport) {
         })
     );
     passport.serializeUser(function (user, done) {
-        console.log("we are in in serializeUser" , user , done)
         done(null, user.id);
     });
 
     passport.deserializeUser(async function (id, done) {
         try {
-            console.log("this is my id" , id)
             const user = await User.findById(id);
             done(null, user);
         } catch (error) {

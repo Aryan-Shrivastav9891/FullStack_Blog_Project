@@ -1,47 +1,38 @@
-const {Mongoose, Schema, default: mongoose, model} = require("mongoose");
+const { Mongoose, Schema, default: mongoose, model } = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-// Schema
 const PostSchema = new Schema(
-    {
-        title: {
-            type: String,
-            require: true,
-            trim: true,
-        },
-        content: {
-            type: String,
-            require: true,
-        },
-        author: {
-            type: Schema.Types.ObjectId,
-            require: false,
-            ref:"User"
-        },
-        // images: [
-        //     {
-        //         url: {
-        //             type: String,
-        //             required: true,
-        //         },
-        //         public_id: {
-        //             type: String,
-        //             require: true,
-        //         },
-        //     },
-        // ],
-        // comments: [
-        //     {
-        //         type: Schema.types.ObjectId,
-        //         ref: "Comment",
-        //     },
-        // ],
+  {
+    title: {
+      type: String,
+      required: true, // Fixed the typo: 'require' to 'required'
+      trim: true,
     },
-    {
-        timestamps: true,
-    }
+    content: {
+      type: String,
+      required: true,
+    },
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User", // Kept 'required: false' implicit, as it's optional by default
+    },
+    images: [
+      {
+        url: {
+          type: String,
+          required: true,
+        },
+        public_id: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+
+  },
+  {
+    timestamps: true,
+  }
 );
 
-const Post = mongoose.model("Post", PostSchema);
-
-module.exports = Post;
+module.exports = mongoose.model("Post", PostSchema);
