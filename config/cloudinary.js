@@ -1,5 +1,6 @@
 const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
+console.log("we are hear in cloudinary")
 
 module.exports = cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -25,5 +26,6 @@ const uploadFileToCloudianry = async (filePath) => {
   }
 };
 module.exports = uploadFileToCloudianry
+
 
 
