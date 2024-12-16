@@ -22,6 +22,18 @@ exports.createPost = async (req, res) => {
 
     const ul = uploadResult.url;
     const { title, content } = req.body;
+    console.log(req.file , "this is my file")
+
+
+    if (!req.file  || !req.file.length === 0) {
+      res.render("newPost" , {
+        title: "Create Post ",
+        user: req.user,
+        success: "plz add a post ",
+        error: "",
+      })
+    }
+
     // console.log(title , " " , content , " " , req.user._id , " " ,  uploadResult.url , "this is my createPost");
     await Post.create({
       title: title,
