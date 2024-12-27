@@ -1,5 +1,4 @@
-const {Mongoose, Schema, default: mongoose, model} = require("mongoose");
-const bcrypt = require("bcryptjs");
+const {Schema, default: mongoose, model} = require("mongoose");
 
 // Schema
 const FileSchema = new Schema(

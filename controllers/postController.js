@@ -1,54 +1,47 @@
+const asyncHandler = require("express-async-handler");
 const Post = require("../models/Post");
 const fs = require("fs");
 const path = require("path");
 const uploadFileToCloudianry = require("../config/cloudinary");
-// const { url } = require("inspector");
 const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
 
-exports.getPostForm = (req, res) => {
+exports.getPostForm = asyncHandler((req, res) => {
   res.render("newPost", {
     title: "Create Post",
     user: req.user,
     error: "",
     success: "",
   });
-};
+});
 
-exports.createPost = async (req, res) => {
+exports.createPost = asyncHandler(async (req, res) => {
   try {
     let fpath = path.join(__dirname, `../uploadImage/${req.file.filename}`);
+    console.log(req.file.fieldname);
     const uploadResult = await uploadFileToCloudianry(fpath);
-
     const ul = uploadResult.url;
     const { title, content } = req.body;
-    console.log(req.file , "this is my file")
-
-
-    if (!req.file  || !req.file.length === 0) {
-      res.render("newPost" , {
+    console.log(req.file, "this is my file");
+    if (!req.file || !req.file.length === 0) {
+      res.render("newPost", {
         title: "Create Post ",
         user: req.user,
         success: "plz add a post ",
         error: "",
-      })
+      });
     }
-
-    // console.log(title , " " , content , " " , req.user._id , " " ,  uploadResult.url , "this is my createPost");
     await Post.create({
       title: title,
       content: content,
       author: req.user._id,
-      // images: [{ url:{ url:uploadResult.url }}, { public_id:{public_id: uploadResult.public_id }}],
       images: [
         {
-          url: uploadResult.url, // Directly assign the value
-          public_id: uploadResult.public_id, // Directly assign the value
+          url: uploadResult.url,
+          public_id: uploadResult.public_id,
         },
       ],
     });
-    // console.log("newPost")
-    // res.redirect("/posts");
     res.render("newPost", {
       title: "Create Post ",
       user: req.user,
@@ -58,7 +51,6 @@ exports.createPost = async (req, res) => {
     });
 
     if (fs.existsSync(fpath)) {
-      // console.log(fpath , "this is my file path")
       fs.unlink(fpath, (err) => {
         if (err) console.error("Error deleting file:", err.message);
         else console.log("Local file deleted:", fpath);
@@ -67,11 +59,17 @@ exports.createPost = async (req, res) => {
       console.log("File not found, skipping deletion:", filePath);
     }
   } catch (error) {
-    console.log(error, "ERROR");
-    res.status(500).json({
-      success: false,
-      message: "Failed to upload image",
-      error: error.message,
+    // console.log(error, "ERROR");
+    // res.status(500).json({
+    //   success: false,
+    //   message: "Failed to upload image",
+    //   error: error.message,
+    // });
+    res.status(500);
+    res.render("error", {
+      title: "Error",
+      // error: "err.message",
+      user: "req.user",
     });
   }
-};
+});

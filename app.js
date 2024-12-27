@@ -8,6 +8,7 @@ const userRoute = require("./routes/authRoute");
 const passportConfig = require("./config/passport");
 const MongoStore = require("connect-mongo");
 const postRoute = require("./routes/postRoute");
+const  errorHandler  = require("./middlewares/errorHandler");
 
 //EJS
 app.set("view engine", "ejs");
@@ -32,6 +33,7 @@ app.use(
 passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(errorHandler);
 
 //! Route   Login
 app.use("/auth", userRoute);
