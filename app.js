@@ -9,6 +9,14 @@ const passportConfig = require("./config/passport");
 const MongoStore = require("connect-mongo");
 const postRoute = require("./routes/postRoute");
 const  errorHandler  = require("./middlewares/errorHandler");
+//
+// mongoDB_URL="mongodb+srv://AryanShrivastav:Aryan%40111@cluster0.ml087.mongodb.net/Full_Stack_Blog_Project"
+// port=8082
+// # mongoDB_URL
+
+// CLOUD_NAME = "divi9nlmq"
+// CLOUDINARY_API_KEY = "912585737536838"
+// CLOUDINARY_SECRET = "v9esqziAeDISqGatUcj2l8f7zOg"
 
 //EJS
 app.set("view engine", "ejs");
