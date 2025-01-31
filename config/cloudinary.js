@@ -16,12 +16,10 @@ const uploadFileToCloudianry = async (filePath) => {
       unique_filename: false, // Avoid unique names (optional)
       overwrite: true, // Overwrite if file already exists (optional)
     });
-    
-    // console.log("Upload successful:", result);
     return result;
 
   } catch (error) {
-    console.error("Error uploading to Cloudinary:", error.message);
+    console.error("Error uploading to Cloudinary:", error);
     throw error; // Handle error as required
   }
 };

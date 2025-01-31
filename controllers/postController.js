@@ -68,8 +68,19 @@ exports.createPost = asyncHandler(async (req, res) => {
     res.status(500);
     res.render("error", {
       title: "Error",
-      // error: "err.message",
+      error: error.message,
       user: "req.user",
     });
   }
+});
+
+exports.getPosts = asyncHandler(async (req, res) => {
+  const posts =await Post.find().populate("author" , "username")
+  res.render("posts", {
+    title: "Posts",
+    posts,
+    user: req.user,
+    success: "",
+    error: "",
+  });
 });
